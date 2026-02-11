@@ -11,7 +11,8 @@
 body{
 font-family:'Segoe UI',cursive;
 height:100vh;
-background:linear-gradient(135deg,#ff9ec4,#ffd6ec);
+/* Darker background */
+background:linear-gradient(135deg,#e0669f,#f3a0c4);
 display:flex;
 justify-content:center;
 align-items:center;
@@ -255,7 +256,7 @@ function startHearts(){
 showScreen("heartsGame");
 heartCount=0;
 document.getElementById("heartScore").innerText="0 / 5";
-heartInterval=setInterval(spawnHeart,500); // faster spawn
+heartInterval=setInterval(spawnHeart,500);
 }
 
 function spawnHeart(){
@@ -344,7 +345,8 @@ document.getElementById("bunnyScore").innerText="0 / 3";
 let bunny=document.getElementById("bunny");
 bunny.style.display="block";
 moveBunny();
-bunnyInterval=setInterval(moveBunny,120);
+// Slower bunny speed
+bunnyInterval=setInterval(moveBunny,250);
 }
 
 function moveBunny(){
@@ -359,7 +361,7 @@ document.getElementById("bunnyScore").innerText=bunnyCount+" / 3";
 if(bunnyCount>=3){
 clearInterval(bunnyInterval);
 this.style.display="none";
-document.body.style.background="linear-gradient(135deg,#ff9ec4,#ffd6ec)";
+document.body.style.background="linear-gradient(135deg,#e0669f,#f3a0c4)";
 showScreen("finalScreen");
 }
 };
@@ -380,3 +382,4 @@ setInterval(createSakura, 300);
 </script>
 </body>
 </html>
+
