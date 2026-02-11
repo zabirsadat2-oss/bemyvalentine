@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Valentine 💖</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:'Segoe UI',cursive;
+height:100vh;
+background:linear-gradient(135deg,#ff9ec4,#ffd6ec);
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+overflow:hidden;
+transition:0.5s;
+position: relative;
+}
+
+.screen{
+display:none;
+text-align:center;
+width:90%;
+max-width:520px;
+animation:fade 0.5s ease;
+}
+
+.active{display:block;}
+
+@keyframes fade{
+from{opacity:0;transform:scale(0.9);}
+to{opacity:1;transform:scale(1);}
+}
+
+h1,h2{margin-bottom:20px;line-height:1.4;}
+
+.buttonRow{
+display:flex;
+justify-content:center;
+gap:20px;
+margin-top:20px;
+flex-wrap:wrap;
+}
+
+button{
+padding:12px 25px;
+border:none;
+border-radius:30px;
+font-size:18px;
+cursor:pointer;
+background:white;
+color:#ff4f8b;
+transition:0.3s;
+}
+
+button:hover{transform:scale(1.1);}
+
+#noBtn{
+position: relative; /* now stays in flow */
+transition: transform 0.3s ease;
+}
+
+.giftRow{
+display:flex;
+justify-content:center;
+gap:25px;
+margin:20px 0;
+flex-wrap:wrap;
+}
+
+.gift{
+font-size:65px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.gift:hover{transform:scale(1.2);}
+
+.messageBox{
+background:white;
+color:#ff4f8b;
+padding:20px;
+border-radius:20px;
+margin-top:15px;
+display:none;
+}
+
+.optionBtn{
+display:block;
+margin:10px auto;
+width:220px;
+}
+
+#bear{
+margin-top:15px;
+display:none;
+font-size:20px;
+}
+
+.heart{
+position:absolute;
+font-size:24px;
+animation:floatUp 3s linear forwards;
+}
+
+@keyframes floatUp{
+from{transform:translateY(0);}
+to{transform:translateY(-600px);opacity:0;}
+}
+
+#bunny{
+position:absolute;
+font-size:60px;
+cursor:pointer;
+display:none;
+transition:0.1s;
+}
+
+/* Sakura animation using emoji */
+.sakura{
+position:absolute;
+font-size:24px;
+pointer-events:none;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+0%{transform: translateY(-50px) rotate(0deg); opacity:0.8;}
+100%{transform: translateY(110vh) rotate(360deg); opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- 1 -->
+<div class="screen active" id="screen1">
+<h1>Will you be my Valentine Suzuki Hakari? 💖</h1>
+<div class="buttonRow">
+<button onclick="startGifts()">Yes 💓</button>
+<button id="noBtn">No 😔</button>
+</div>
+</div>
+
+<!-- Gifts -->
+<div class="screen" id="gifts">
+<h2>Choose your gift 🎁</h2>
+
+<div class="giftRow">
+<span class="gift" onclick="showMessage(1)">🎁</span>
+<span class="gift" onclick="showMessage(2)">🎁</span>
+<span class="gift" onclick="showMessage(3)">🎁</span>
+</div>
+
+<div class="messageBox" id="msg1">
+You are more beautiful than any flower 🌸.  
+Even if I filled the world with roses, they still wouldn't match your glow.
+</div>
+
+<div class="messageBox" id="msg2">
+Like Kinder Joy 🍫, you are sweet and full of surprises.  
+Every moment with you feels magical.
+</div>
+
+<div class="messageBox" id="msg3">
+One day we’ll go to Japan 🇯🇵 together.  
+Under cherry blossoms, you’ll still be my favorite view.
+</div>
+
+<div class="buttonRow">
+<button onclick="startHearts()">Next 💖</button>
+</div>
+</div>
+
+<!-- Hearts -->
+<div class="screen" id="heartsGame">
+<h2>Catch 5 Hearts ❤️</h2>
+<p id="heartScore">0 / 5</p>
+</div>
+
+<!-- Balloons -->
+<div class="screen" id="balloonGame">
+<h2>Pop 5 Love Balloons 🎈</h2>
+<p id="balloonScore">0 / 5</p>
+</div>
+
+<!-- Quiz -->
+<div class="screen" id="quizGame">
+<h2>When did you finally accept my proposal? 💕</h2>
+
+<button class="optionBtn" onclick="checkAnswer('a')">22nd January</button>
+<button class="optionBtn" onclick="checkAnswer('b')">25 January</button>
+<button class="optionBtn" onclick="checkAnswer('c')">23 January</button>
+<button class="optionBtn" onclick="checkAnswer('d')">24 January</button>
+
+<div id="bear"></div>
+</div>
+
+<!-- Bunny -->
+<div class="screen" id="bunnyGame">
+<h2>Catch the Bunny 3 times 🐇</h2>
+<p id="bunnyScore">0 / 3</p>
+<div id="bunny">🐇</div>
+</div>
+
+<!-- Final -->
+<div class="screen" id="finalScreen">
+<h1>
+It was not your eyes or your smile,<br>
+it was everything about you that made me feel like home<br>
+in a world of passing strangers 🍃.
+</h1>
+
+<h2 style="margin-top:20px;">
+You are the queen of my heart 👑
+</h2>
+</div>
+
+<script>
+
+let screens=document.querySelectorAll(".screen");
+
+function showScreen(id){
+screens.forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+
+/* No button smooth movement */
+const noBtn = document.getElementById("noBtn");
+
+function moveNoBtn() {
+  const offsetX = (Math.random() - 0.5) * 200; // move ±100px horizontally
+  const offsetY = (Math.random() - 0.5) * 100; // move ±50px vertically
+  noBtn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+}
+
+noBtn.addEventListener("mouseover", moveNoBtn);
+noBtn.addEventListener("click", moveNoBtn);
+
+/* Gifts */
+function startGifts(){showScreen("gifts");}
+
+function showMessage(n){
+document.querySelectorAll(".messageBox").forEach(m=>m.style.display="none");
+document.getElementById("msg"+n).style.display="block";
+}
+
+/* Hearts */
+let heartCount=0,heartInterval;
+
+function startHearts(){
+showScreen("heartsGame");
+heartCount=0;
+document.getElementById("heartScore").innerText="0 / 5";
+heartInterval=setInterval(spawnHeart,700);
+}
+
+function spawnHeart(){
+if(heartCount>=5){
+clearInterval(heartInterval);
+startBalloon();
+return;
+}
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*window.innerWidth+"px";
+h.style.top=window.innerHeight+"px";
+h.onclick=function(){
+h.remove();
+heartCount++;
+document.getElementById("heartScore").innerText=heartCount+" / 5";
+};
+document.body.appendChild(h);
+setTimeout(()=>{h.remove()},3000);
+}
+
+/* Balloons */
+let balloonCount=0,balloonInterval;
+
+function startBalloon(){
+showScreen("balloonGame");
+balloonCount=0;
+document.getElementById("balloonScore").innerText="0 / 5";
+balloonInterval=setInterval(spawnBalloon,800);
+}
+
+function spawnBalloon(){
+if(balloonCount>=5){
+clearInterval(balloonInterval);
+showScreen("quizGame");
+return;
+}
+let b=document.createElement("div");
+b.className="heart";
+b.innerHTML="🎈";
+b.style.left=Math.random()*window.innerWidth+"px";
+b.style.top=window.innerHeight+"px";
+b.onclick=function(){
+b.remove();
+balloonCount++;
+document.getElementById("balloonScore").innerText=balloonCount+" / 5";
+};
+document.body.appendChild(b);
+setTimeout(()=>{b.remove()},3000);
+}
+
+/* Quiz */
+function checkAnswer(ans){
+let bear=document.getElementById("bear");
+
+if(ans==='c'){
+document.body.style.background="linear-gradient(135deg,#2ecc71,#27ae60)";
+bear.style.display="none";
+
+for(let i=0;i<25;i++){
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="💚";
+h.style.left=Math.random()*window.innerWidth+"px";
+h.style.top="80%";
+document.body.appendChild(h);
+}
+
+setTimeout(startBunny,2000);
+
+}else{
+document.body.style.background="linear-gradient(135deg,#ff4e50,#c0392b)";
+bear.style.display="block";
+bear.innerHTML="🧸 Wrong answer! Try again 💔";
+}
+}
+
+/* Bunny */
+let bunnyCount=0,bunnyInterval;
+
+function startBunny(){
+showScreen("bunnyGame");
+bunnyCount=0;
+document.getElementById("bunnyScore").innerText="0 / 3";
+let bunny=document.getElementById("bunny");
+bunny.style.display="block";
+moveBunny();
+bunnyInterval=setInterval(moveBunny,120);
+}
+
+function moveBunny(){
+let bunny=document.getElementById("bunny");
+bunny.style.top=Math.random()*(window.innerHeight-80)+"px";
+bunny.style.left=Math.random()*(window.innerWidth-80)+"px";
+}
+
+document.getElementById("bunny").onclick=function(){
+bunnyCount++;
+document.getElementById("bunnyScore").innerText=bunnyCount+" / 3";
+
+if(bunnyCount>=3){
+clearInterval(bunnyInterval);
+this.style.display="none";
+document.body.style.background="linear-gradient(135deg,#ff9ec4,#ffd6ec)";
+showScreen("finalScreen");
+}
+};
+
+/* Sakura animation */
+function createSakura() {
+    let sakura = document.createElement("div");
+    sakura.className = "sakura";
+    sakura.innerHTML = "🌸";
+    sakura.style.left = Math.random() * window.innerWidth + "px";
+    sakura.style.fontSize = 16 + Math.random() * 20 + "px";
+    sakura.style.animationDuration = 3 + Math.random() * 3 + "s";
+    document.body.appendChild(sakura);
+    setTimeout(() => sakura.remove(), 6000);
+}
+setInterval(createSakura, 300);
+
+</script>
+
+</body>
+</html>
