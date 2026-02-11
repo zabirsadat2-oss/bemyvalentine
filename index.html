@@ -11,8 +11,8 @@
 body{
 font-family:'Segoe UI',cursive;
 height:100vh;
-/* Darker background */
-background:linear-gradient(135deg,#e0669f,#f3a0c4);
+/* Purple background */
+background:linear-gradient(135deg,#6a0dad,#9b30ff);
 display:flex;
 justify-content:center;
 align-items:center;
@@ -140,7 +140,7 @@ animation:fall linear forwards;
 
 <!-- 1 -->
 <div class="screen active" id="screen1">
-<h1>Will you be my Valentine? 💖</h1>
+<h1>Will you be my Valentine Suzuki Hakari? 💖</h1>
 <div class="buttonRow">
 <button onclick="startGifts()">Yes 💓</button>
 <button id="noBtn">No 😔</button>
@@ -346,7 +346,7 @@ let bunny=document.getElementById("bunny");
 bunny.style.display="block";
 moveBunny();
 // Slower bunny speed
-bunnyInterval=setInterval(moveBunny,250);
+bunnyInterval=setInterval(moveBunny,350);
 }
 
 function moveBunny(){
@@ -361,7 +361,7 @@ document.getElementById("bunnyScore").innerText=bunnyCount+" / 3";
 if(bunnyCount>=3){
 clearInterval(bunnyInterval);
 this.style.display="none";
-document.body.style.background="linear-gradient(135deg,#e0669f,#f3a0c4)";
+document.body.style.background="linear-gradient(135deg,#6a0dad,#9b30ff)";
 showScreen("finalScreen");
 }
 };
@@ -382,4 +382,3 @@ setInterval(createSakura, 300);
 </script>
 </body>
 </html>
-
