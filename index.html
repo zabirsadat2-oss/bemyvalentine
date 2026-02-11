@@ -60,7 +60,7 @@ transition:0.3s;
 button:hover{transform:scale(1.1);}
 
 #noBtn{
-position: relative; /* now stays in flow */
+position: relative;
 transition: transform 0.3s ease;
 }
 
@@ -120,7 +120,7 @@ display:none;
 transition:0.1s;
 }
 
-/* Sakura animation using emoji */
+/* Sakura animation */
 .sakura{
 position:absolute;
 font-size:24px;
@@ -139,7 +139,7 @@ animation:fall linear forwards;
 
 <!-- 1 -->
 <div class="screen active" id="screen1">
-<h1>Will you be my Valentine Suzuki Hakari? 💖</h1>
+<h1>Will you be my Valentine? 💖</h1>
 <div class="buttonRow">
 <button onclick="startGifts()">Yes 💓</button>
 <button id="noBtn">No 😔</button>
@@ -221,7 +221,6 @@ You are the queen of my heart 👑
 </div>
 
 <script>
-
 let screens=document.querySelectorAll(".screen");
 
 function showScreen(id){
@@ -233,8 +232,8 @@ document.getElementById(id).classList.add("active");
 const noBtn = document.getElementById("noBtn");
 
 function moveNoBtn() {
-  const offsetX = (Math.random() - 0.5) * 200; // move ±100px horizontally
-  const offsetY = (Math.random() - 0.5) * 100; // move ±50px vertically
+  const offsetX = (Math.random() - 0.5) * 200; 
+  const offsetY = (Math.random() - 0.5) * 100; 
   noBtn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
 }
 
@@ -256,7 +255,7 @@ function startHearts(){
 showScreen("heartsGame");
 heartCount=0;
 document.getElementById("heartScore").innerText="0 / 5";
-heartInterval=setInterval(spawnHeart,700);
+heartInterval=setInterval(spawnHeart,500); // faster spawn
 }
 
 function spawnHeart(){
@@ -268,15 +267,17 @@ return;
 let h=document.createElement("div");
 h.className="heart";
 h.innerHTML="❤️";
-h.style.left=Math.random()*window.innerWidth+"px";
-h.style.top=window.innerHeight+"px";
+h.style.left = Math.random() * (window.innerWidth - 40) + "px";
+h.style.top = Math.random() * (window.innerHeight - 150) + "px";
+h.style.fontSize = 30 + Math.random()*20 + "px";
+h.style.textShadow = "0 0 5px #ff4f8b, 0 0 10px #ff4f8b";
 h.onclick=function(){
-h.remove();
-heartCount++;
-document.getElementById("heartScore").innerText=heartCount+" / 5";
+  h.remove();
+  heartCount++;
+  document.getElementById("heartScore").innerText = heartCount + " / 5";
 };
 document.body.appendChild(h);
-setTimeout(()=>{h.remove()},3000);
+setTimeout(()=>{h.remove()},4000);
 }
 
 /* Balloons */
@@ -286,7 +287,7 @@ function startBalloon(){
 showScreen("balloonGame");
 balloonCount=0;
 document.getElementById("balloonScore").innerText="0 / 5";
-balloonInterval=setInterval(spawnBalloon,800);
+balloonInterval=setInterval(spawnBalloon,500);
 }
 
 function spawnBalloon(){
@@ -298,25 +299,25 @@ return;
 let b=document.createElement("div");
 b.className="heart";
 b.innerHTML="🎈";
-b.style.left=Math.random()*window.innerWidth+"px";
-b.style.top=window.innerHeight+"px";
+b.style.left = Math.random() * (window.innerWidth - 40) + "px";
+b.style.top = Math.random() * (window.innerHeight - 150) + "px";
+b.style.fontSize = 30 + Math.random()*20 + "px";
+b.style.textShadow = "0 0 5px #ff4f8b, 0 0 10px #ff4f8b";
 b.onclick=function(){
-b.remove();
-balloonCount++;
-document.getElementById("balloonScore").innerText=balloonCount+" / 5";
+  b.remove();
+  balloonCount++;
+  document.getElementById("balloonScore").innerText = balloonCount + " / 5";
 };
 document.body.appendChild(b);
-setTimeout(()=>{b.remove()},3000);
+setTimeout(()=>{b.remove()},4000);
 }
 
 /* Quiz */
 function checkAnswer(ans){
 let bear=document.getElementById("bear");
-
 if(ans==='c'){
 document.body.style.background="linear-gradient(135deg,#2ecc71,#27ae60)";
 bear.style.display="none";
-
 for(let i=0;i<25;i++){
 let h=document.createElement("div");
 h.className="heart";
@@ -325,9 +326,7 @@ h.style.left=Math.random()*window.innerWidth+"px";
 h.style.top="80%";
 document.body.appendChild(h);
 }
-
 setTimeout(startBunny,2000);
-
 }else{
 document.body.style.background="linear-gradient(135deg,#ff4e50,#c0392b)";
 bear.style.display="block";
@@ -357,7 +356,6 @@ bunny.style.left=Math.random()*(window.innerWidth-80)+"px";
 document.getElementById("bunny").onclick=function(){
 bunnyCount++;
 document.getElementById("bunnyScore").innerText=bunnyCount+" / 3";
-
 if(bunnyCount>=3){
 clearInterval(bunnyInterval);
 this.style.display="none";
@@ -380,6 +378,5 @@ function createSakura() {
 setInterval(createSakura, 300);
 
 </script>
-
 </body>
 </html>
