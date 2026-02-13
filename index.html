@@ -135,6 +135,16 @@ animation:fall linear forwards;
 0%{transform: translateY(-50px) rotate(0deg); opacity:0.8;}
 100%{transform: translateY(110vh) rotate(360deg); opacity:0;}
 }
+
+/* ✅ Only change: smaller final message text */
+#finalScreen h1{
+font-size:16px;
+line-height:1.4;
+}
+
+#finalScreen h2{
+font-size:18px;
+}
 </style>
 </head>
 
@@ -355,7 +365,6 @@ document.getElementById("bunnyScore").innerText="0 / 3";
 let bunny=document.getElementById("bunny");
 bunny.style.display="block";
 moveBunny();
-// Adjusted bunny speed: slower but not too slow
 bunnyInterval=setInterval(moveBunny,900);
 }
 
@@ -392,5 +401,3 @@ setInterval(createSakura, 300);
 </script>
 </body>
 </html>
-
-
